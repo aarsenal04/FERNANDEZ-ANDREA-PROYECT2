@@ -42,7 +42,7 @@ def menu():
 
         # font and fonts´sizes
         gamefont = pygame.font.Font("./images/mariofont.ttf", 50)
-        gamefont2 = pygame.font.Font("./images/mariofont.ttf", 20)
+        gamefont2 = pygame.font.Font("./images/mariofont.ttf", 35)
 
         # caption background
         entryspace = pygame.image.load("./images/entryspace.png").convert_alpha()
@@ -76,7 +76,7 @@ def menu():
         screen1.blit(marioright, (50, 180))
         marioleft = pygame.image.load("./images/left_mario.png").convert_alpha()
         marioleft = pygame.transform.scale(marioleft, (150, 150))
-        screen1.blit(marioright, (785, 180))
+        screen1.blit(marioleft, (785, 180))
 
         # enemies on top of the menu to decorate
         greenturtle1 = pygame.image.load("./images/green_turtle1.png").convert_alpha()
@@ -108,16 +108,16 @@ def menu():
         screen1.blit(cyanbullet, (718, 10))
 
         # images of the level buttons
-        buttonlevel1 = gamefont.render("level 1", 0, (255,255,255))
-        screen1.blit(buttonlevel1, (100, 400))
+        buttonlevel1 = gamefont2.render("level 1", 0, (255,255,255))
+        screen1.blit(buttonlevel1, (180, 400))
 
         # button level 2
-        buttonlevel2 = gamefont.render("level 2", 0, (255,255,255))
-        screen1.blit(buttonlevel2, (100, 470))
+        buttonlevel2 = gamefont2.render("level 2", 0, (255,255,255))
+        screen1.blit(buttonlevel2, (180, 450))
 
         # button level 3
-        buttonlevel3 = gamefont.render("level 3", 0, (255,255,255))
-        screen1.blit(buttonlevel3, (100, 540))
+        buttonlevel3 = gamefont2.render("level 3", 0, (255,255,255))
+        screen1.blit(buttonlevel3, (185, 500))
 
         # checks if the player clicks the buttons
         for click in pygame.event.get():
@@ -181,11 +181,11 @@ def menu():
 
         # instructions button
         instructionsbutton = gamefont2.render("instructions", 0, (255,255,255))
-        screen1.blit(instructionsbutton, (600, 470))
+        screen1.blit(instructionsbutton, (590, 450))
 
         # leaderboard button
         leaderboard = gamefont2.render("leaderboard", 0, (255,255,255))
-        screen1.blit(leaderboard, (600, 540))
+        screen1.blit(leaderboard, (608, 500))
 
         # to make the display surface actually appear on the user’s monitor (changes)
         pygame.display.update()
