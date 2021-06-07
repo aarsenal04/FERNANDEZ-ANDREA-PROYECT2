@@ -20,8 +20,9 @@ pygame.display.set_icon(icon)
 # to start writing the name(name input)
 namebox = ""
 
-#images
+# images for backgrounds
 mainscreen = ("./images/background.png")
+instructiontext = ("./images/instructions.png")
 
 # global for score 
 score = 0
@@ -60,7 +61,7 @@ def menu():
 
         # name box
         namebox1 = gamefont2.render(namebox, 0, (255, 255, 255))
-        screen1.blit (namebox1, (500 - namebox1.get_width()//2, 210))
+        screen1.blit (namebox1, (500 - namebox1.get_width()//2, 200))
 
         # levels section
         levelsection = gamefont.render("levels", 0, (222, 89, 24))
@@ -133,47 +134,53 @@ def menu():
              if click.type == MOUSEBUTTONUP:
                  mouse_x, mouse_y = pygame.mouse.get_pos()
 
-                 # to read the click on the level 1 button
-                 if mouse_x >= 100 and mouse_x <= 190:
+                 # get the click on the level 1 button
+                 if mouse_x >= 180 and mouse_x <= 337:
                      if namebox != "":
-                         if mouse_y >= 400 and mouse_y <= 470:
-                             #first_level.main(namebox)
+                         if mouse_y >= 400 and mouse_y <= 428:
+                             first_level(namebox)
                              flag = 0
 
-                 # to read the click on the level 2 button
-                 if mouse_x >= 250 and mouse_x <= 340:
+                # get the click on the level 2 button
+                 if mouse_x >= 180 and mouse_x <= 337:
                      if namebox!="":
-                         if mouse_y >= 400 and mouse_y <= 470:
-                             #second_level.level2(namebox)
+                         if mouse_y >= 450 and mouse_y <= 478:
+                             second_level(namebox)
                              flag = 0
 
-                 # to read the click on the level 3 button
-                 if mouse_x >= 400 and mouse_x <= 490:
+                # get the click on the level 3 button
+                 if mouse_x >= 185 and mouse_x <= 342:
                      if namebox != "":
-                         if mouse_y >= 400 and mouse_y <= 470:
-                             #third_level.level3(namebox)
+                         if mouse_y >= 500 and mouse_y <= 528:
+                             third_level(namebox)
                              flag = 0
 
-                 # to read the click on the entry name button
-                 if mouse_x >= 320 and mouse_x <= 490:
-                     if mouse_y >= 250 and mouse_y <= 300:
+                # prueba
+                # prueba = pygame.image.load("./images/prueba.png").convert_alpha()
+                # prueba = pygame.transform.scale(prueba, (157, 28)) #tamaño
+                # screen1.blit(prueba, (185, 500)) #x, y
+
+                # get the click on the instructions button
+                 if mouse_x >= 590 and mouse_x <= 870:
+                     if mouse_y >= 450 and mouse_y <= 478:
+                         instructions()
                          flag = 0
 
-                # to read the click on the instructions button
-                 if mouse_x >= 70 and mouse_x <= 190:
-                     if mouse_y >= 546 and mouse_y <= 586:
-                         #player_instructions.instruct()
+                # get the click on the information button
+                 if mouse_x >= 600 and mouse_x <= 880:
+                     if mouse_y >= 400 and mouse_y <= 428:
+                         information()
                          flag = 0
 
-                # to read the click on the information botton
-                 if mouse_x >= 240 and mouse_x <= 350:
-                     if mouse_y >= 550 and mouse_y <= 585:
-                         #infoscreen.information()
+                # get the click on the leaderboard button
+                 if mouse_x >= 608 and mouse_x <= 888:
+                     if mouse_y >= 500 and mouse_y <= 528:
+                         leader_board()
                          flag = 0
 
         # entry name button
-        buttonentry = gamefont.render("entry name", 0, (255,255,255))
-        screen1.blit(buttonentry, (320, 240))
+        entryname = gamefont.render("entry name", 0, (255,255,255))
+        screen1.blit(entryname, (320, 240))
 
         # info button
         infobutton = gamefont2.render("information", 0, (255,255,255))
