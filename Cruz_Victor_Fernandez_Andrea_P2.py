@@ -54,7 +54,7 @@ def menu():
         gamename = gamefont.render("M A R I O  I N V A S I O N", 0, (255,255,255))
         screen1.blit(gamename, (110, 95))
 
-        # entry space button
+        # entry space line
         entryspace = pygame.image.load("./images/entryspace.png").convert_alpha()
         entryspace = pygame.transform.scale(entryspace, (500, 5))
         screen1.blit(entryspace, (245, 230))
@@ -111,12 +111,8 @@ def menu():
         # images of the level buttons
         buttonlevel1 = gamefont2.render("level 1", 0, (255,255,255))
         screen1.blit(buttonlevel1, (180, 400))
-
-        # button level 2
         buttonlevel2 = gamefont2.render("level 2", 0, (255,255,255))
         screen1.blit(buttonlevel2, (180, 450))
-
-        # button level 3
         buttonlevel3 = gamefont2.render("level 3", 0, (255,255,255))
         screen1.blit(buttonlevel3, (185, 500))
 
@@ -178,7 +174,7 @@ def menu():
                          leader_board()
                          flag = 0
 
-        # entry name button
+        # entry name label
         entryname = gamefont.render("entry name", 0, (255,255,255))
         screen1.blit(entryname, (320, 240))
 
@@ -194,7 +190,7 @@ def menu():
         leaderboard = gamefont2.render("leaderboard", 0, (255,255,255))
         screen1.blit(leaderboard, (608, 500))
 
-        # to make the display surface actually appear on the user’s monitor (changes)
+        # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
 menu()
