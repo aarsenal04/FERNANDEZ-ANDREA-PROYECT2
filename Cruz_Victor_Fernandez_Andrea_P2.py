@@ -20,12 +20,15 @@ pygame.display.set_icon(icon)
 # to start writing the name(name input)
 namebox = ""
 
+# player´s life
+life = 3
+
 # images for backgrounds
 mainscreen = ("./images/background.png")
 instructiontext = ("./images/instructions.png")
 infoscreen = ("./images/information.png")
 
-# global for score 
+#global for score 
 score = 0
 
 def menu():
@@ -142,14 +145,14 @@ def menu():
                  if mouse_x >= 180 and mouse_x <= 337:
                      if namebox!="":
                          if mouse_y >= 450 and mouse_y <= 478:
-                             #second_level(namebox)
+                             level2(namebox)
                              flag = 0
 
                 # get the click on the level 3 button
                  if mouse_x >= 185 and mouse_x <= 342:
                      if namebox != "":
                          if mouse_y >= 500 and mouse_y <= 528:
-                             #level3(namebox)
+                             level3(namebox)
                              flag = 0
 
                 # get the click on the instructions button
@@ -167,7 +170,7 @@ def menu():
                 # get the click on the leaderboard button
                  if mouse_x >= 608 and mouse_x <= 888:
                      if mouse_y >= 500 and mouse_y <= 528:
-                         #leader_board()
+                         leader_board()
                          flag = 0
 
         # entry name label
@@ -261,6 +264,13 @@ def information():
         pygame.display.update()
 
 def level1(namebox):
+    
+    # for time
+    time = 0
+    secondstimer = 0
+
+    # to work with the frames (timing)
+    clock = pygame.time.Clock()
 
     # loop that keeps the window active
     while True:
@@ -268,9 +278,9 @@ def level1(namebox):
         # to delimit the movement of the frames
         clock.tick(FPS)
 
-        # info background image
-        info_bg = pygame.image.load(mainscreen)
-        screen1.blit(info_bg, (0, 0))
+        # background image
+        background = pygame.image.load(mainscreen)
+        screen1.blit(background, (0, 0))
 
         # backbutton
         buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
@@ -279,10 +289,200 @@ def level1(namebox):
 
         # name, level, time, life on screen
         labelfont = pygame.font.Font("./images/mariofont.ttf", 20)
-        namebox_label = labelfont.render(f"player: {namebox}", 1, (255, 255, 255))
-        screen1.blit(namebox_label, (20, 20))
-        level1_label = labelfont.render("level 1", 0, (255, 255, 255))
-        screen1.blit(level1_label, (260,  20))
+        namebox_label = labelfont.render(f"{namebox}", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (50, 20))
+        level1_label = labelfont.render(f"world", 0, (255, 255, 255))
+        screen1.blit(level1_label, (310, 20))
+        levelnumber = labelfont.render(f"1", 0, (255, 255, 255))
+        screen1.blit(levelnumber, (340, 40))
+        time_label = labelfont.render(f"time", 1, (255, 255, 255))
+        screen1.blit(time_label, (570, 20))
+        timenumbers = labelfont.render(f"{time}", 1, (255, 255, 255))
+        screen1.blit(timenumbers, (585, 40))
+        life_label = labelfont.render(f"life", 1, (255, 255, 255))
+        screen1.blit(life_label, (820, 20))
+        lifenumber = labelfont.render(f"x{life}", 1, (255, 255, 255))
+        screen1.blit(lifenumber, (828, 40))
+        score_label = labelfont.render(f"{score}", 1, (255, 255, 255))
+        screen1.blit(score_label, (50, 40))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+
+        # showing timer per seconds-minutes
+        if secondstimer == 60:
+            secondstimer = 0
+            time += 1
+        else:
+            secondstimer += 1
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+def level2(namebox):
+    
+    # for time
+    time = 0
+    secondstimer = 0
+
+    # to work with the frames (timing)
+    clock = pygame.time.Clock()
+
+    # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # background image
+        background = pygame.image.load(mainscreen)
+        screen1.blit(background, (0, 0))
+
+        # backbutton
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255, 255, 255))
+        screen1.blit(backbutton, (20, 600))
+
+        # name, level, time, life on screen
+        labelfont = pygame.font.Font("./images/mariofont.ttf", 20)
+        namebox_label = labelfont.render(f"{namebox}", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (50, 20))
+        level1_label = labelfont.render(f"world", 0, (255, 255, 255))
+        screen1.blit(level1_label, (310, 20))
+        levelnumber = labelfont.render(f"2", 0, (255, 255, 255))
+        screen1.blit(levelnumber, (340, 40))
+        time_label = labelfont.render(f"time", 1, (255, 255, 255))
+        screen1.blit(time_label, (570, 20))
+        timenumbers = labelfont.render(f"{time}", 1, (255, 255, 255))
+        screen1.blit(timenumbers, (585, 40))
+        life_label = labelfont.render(f"life", 1, (255, 255, 255))
+        screen1.blit(life_label, (820, 20))
+        lifenumber = labelfont.render(f"x{life}", 1, (255, 255, 255))
+        screen1.blit(lifenumber, (828, 40))
+        score_label = labelfont.render(f"{score}", 1, (255, 255, 255))
+        screen1.blit(score_label, (50, 40))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+
+        # showing timer per seconds-minutes
+        if secondstimer == 60:
+            secondstimer = 0
+            time += 1
+        else:
+            secondstimer += 1
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+def level3(namebox):
+    
+    # for time
+    time = 0
+    secondstimer = 0
+
+    # to work with the frames (timing)
+    clock = pygame.time.Clock()
+
+    # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # background image
+        background = pygame.image.load(mainscreen)
+        screen1.blit(background, (0, 0))
+
+        # backbutton
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255, 255, 255))
+        screen1.blit(backbutton, (20, 600))
+
+        # name, level, time, life on screen
+        labelfont = pygame.font.Font("./images/mariofont.ttf", 20)
+        namebox_label = labelfont.render(f"{namebox}", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (50, 20))
+        level1_label = labelfont.render(f"world", 0, (255, 255, 255))
+        screen1.blit(level1_label, (310, 20))
+        levelnumber = labelfont.render(f"3", 0, (255, 255, 255))
+        screen1.blit(levelnumber, (340, 40))
+        time_label = labelfont.render(f"time", 1, (255, 255, 255))
+        screen1.blit(time_label, (570, 20))
+        timenumbers = labelfont.render(f"{time}", 1, (255, 255, 255))
+        screen1.blit(timenumbers, (585, 40))
+        life_label = labelfont.render(f"life", 1, (255, 255, 255))
+        screen1.blit(life_label, (820, 20))
+        lifenumber = labelfont.render(f"x{life}", 1, (255, 255, 255))
+        screen1.blit(lifenumber, (828, 40))
+        score_label = labelfont.render(f"{score}", 1, (255, 255, 255))
+        screen1.blit(score_label, (50, 40))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+
+        # showing timer per seconds-minutes
+        if secondstimer == 60:
+            secondstimer = 0
+            time += 1
+        else:
+            secondstimer += 1
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+def leader_board():
+    
+    # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # info background image
+        background = pygame.image.load(mainscreen)
+        screen1.blit(background, (0, 0))
+
+        # backbutton
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255,255,255))
+        screen1.blit(backbutton, (20, 600))
 
         # checks if the player clicks the back button
         for click in pygame.event.get():
@@ -302,7 +502,4 @@ def level1(namebox):
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
-#prueba = pygame.image.load("./images/prueba.png").convert_alpha()
-#prueba = pygame.transform.scale(prueba, (100, 28)) #tamaño
-#screen1.blit(prueba, (20, 580)) #x, y
 menu()
