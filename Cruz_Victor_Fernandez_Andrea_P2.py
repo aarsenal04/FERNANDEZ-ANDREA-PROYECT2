@@ -23,6 +23,7 @@ namebox = ""
 # images for backgrounds
 mainscreen = ("./images/background.png")
 instructiontext = ("./images/instructions.png")
+infoscreen = ("./images/information.png")
 
 # global for score 
 score = 0
@@ -134,7 +135,7 @@ def menu():
                  if mouse_x >= 180 and mouse_x <= 337:
                      if namebox != "":
                          if mouse_y >= 400 and mouse_y <= 428:
-                             #first_level(namebox)
+                             level1(namebox)
                              flag = 0
 
                 # get the click on the level 2 button
@@ -148,19 +149,19 @@ def menu():
                  if mouse_x >= 185 and mouse_x <= 342:
                      if namebox != "":
                          if mouse_y >= 500 and mouse_y <= 528:
-                             #third_level(namebox)
+                             #level3(namebox)
                              flag = 0
 
                 # get the click on the instructions button
                  if mouse_x >= 590 and mouse_x <= 870:
                      if mouse_y >= 450 and mouse_y <= 478:
-                         #instructions()
+                         instructions()
                          flag = 0
 
                 # get the click on the information button
                  if mouse_x >= 600 and mouse_x <= 880:
                      if mouse_y >= 400 and mouse_y <= 428:
-                         #information()
+                         information()
                          flag = 0
 
                 # get the click on the leaderboard button
@@ -188,9 +189,112 @@ def menu():
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
-menu()
+# instrcutions screen
+def instructions():
 
-# prueba
-# prueba = pygame.image.load("./images/prueba.png").convert_alpha()
-# prueba = pygame.transform.scale(prueba, (157, 28)) #tamaño
-# screen1.blit(prueba, (185, 500)) #x, y
+    # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # instructions background image
+        inst_bg = pygame.image.load(instructiontext)
+        screen1.blit(inst_bg, (0, 0))
+
+        # backbutton
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255,255,255))
+        screen1.blit(backbutton, (20, 600))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+def information():
+    
+    # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # info background image
+        info_bg = pygame.image.load(infoscreen)
+        screen1.blit(info_bg, (0, 0))
+
+        # backbutton
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255,255,255))
+        screen1.blit(backbutton, (20, 600))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+def level1():
+     # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # info background image
+        info_bg = pygame.image.load(mainscreen)
+        screen1.blit(info_bg, (0, 0))
+
+        # backbutton
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255,255,255))
+        screen1.blit(backbutton, (20, 600))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+#prueba = pygame.image.load("./images/prueba.png").convert_alpha()
+#prueba = pygame.transform.scale(prueba, (100, 28)) #tamaño
+#screen1.blit(prueba, (20, 580)) #x, y
+menu()
