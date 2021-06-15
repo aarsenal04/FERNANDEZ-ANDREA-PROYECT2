@@ -260,8 +260,9 @@ def information():
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
-def level1():
-     # loop that keeps the window active
+def level1(namebox):
+
+    # loop that keeps the window active
     while True:
         
         # to delimit the movement of the frames
@@ -273,8 +274,15 @@ def level1():
 
         # backbutton
         buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
-        backbutton = buttonfont.render("back", 0, (255,255,255))
+        backbutton = buttonfont.render("back", 0, (255, 255, 255))
         screen1.blit(backbutton, (20, 600))
+
+        # name, level, time, life on screen
+        labelfont = pygame.font.Font("./images/mariofont.ttf", 20)
+        namebox_label = labelfont.render(f"player: {namebox}", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (20, 20))
+        level1_label = labelfont.render("level 1", 0, (255, 255, 255))
+        screen1.blit(level1_label, (260,  20))
 
         # checks if the player clicks the back button
         for click in pygame.event.get():
