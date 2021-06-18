@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 from pygame.locals import *
 
 # to delimit the movement of the frames
@@ -25,6 +26,37 @@ life = 3
 
 # images for backgrounds
 mainscreen = ("./images/background.png")
+level1_screen = ("./images/background.png")
+level2_screen = ("./images/level2bg.jpg")
+level3_screen = ("./images/level3bg.png")
+finalscreen = ("./images/finalbg.png")
+
+# characters
+mario1 = pygame.image.load("./images/right_mario.png")
+mario2 = pygame.image.load("./images/left_mario.png")
+marioright = pygame.image.load("./images/right_mario.png").convert_alpha()
+marioright = pygame.transform.scale(marioright, (150, 150))
+greenturtle1 = pygame.image.load("./images/green_turtle1.png").convert_alpha()
+greenturtle1 = pygame.transform.scale(greenturtle1, (50, 50))
+grayturtle1 = pygame.image.load("./images/gray_turtle1.png").convert_alpha()
+grayturtle1 = pygame.transform.scale(grayturtle1, (50, 50))
+greenwizard = pygame.image.load("./images/green_cloud.png").convert_alpha()
+greenwizard = pygame.transform.scale(greenwizard, (50, 50))
+brownturtle1 = pygame.image.load("./images/brown_turtle1.png").convert_alpha()
+brownturtle1 = pygame.transform.scale(brownturtle1, (50, 50))
+browncloud = pygame.image.load("./images/brown_cloud.png").convert_alpha()
+browncloud = pygame.transform.scale(browncloud, (50, 50))
+graycloud = pygame.image.load("./images/gray_cloud.png").convert_alpha()
+graycloud = pygame.transform.scale(graycloud, (50, 50))
+redturtle1 = pygame.image.load("./images/red_turtle1.png").convert_alpha()
+redturtle1 = pygame.transform.scale(redturtle1, (50, 50))
+whitebullet = pygame.image.load("./images/white_bullet.png").convert_alpha()
+whitebullet = pygame.transform.scale(whitebullet, (50, 50))
+marioleft = pygame.image.load("./images/left_mario.png").convert_alpha()
+marioleft = pygame.transform.scale(marioleft, (150, 150))
+cyanbullet = pygame.image.load("./images/cyan_bullet.png").convert_alpha()
+cyanbullet = pygame.transform.scale(cyanbullet, (50, 50))
+
 instructiontext = ("./images/instructions.png")
 infoscreen = ("./images/information.png")
 
@@ -61,7 +93,6 @@ def menu():
         # entry space line
         entryspace = pygame.image.load("./images/entryspace.png").convert_alpha()
         entryspace = pygame.transform.scale(entryspace, (500, 5))
-        screen1.blit(entryspace, (245, 230))
 
         # name box
         namebox1 = gamefont2.render(namebox, 0, (255, 255, 255))
@@ -75,41 +106,18 @@ def menu():
         about = gamefont.render("about", 0, (222, 89, 24))
         screen1.blit(about, (640, 350))
 
-        # mario image on menu to decorate
-        marioright = pygame.image.load("./images/right_mario.png").convert_alpha()
-        marioright = pygame.transform.scale(marioright, (150, 150))
+        # mario image on menu to decorate and his enemies
         screen1.blit(marioright, (50, 180))
-        marioleft = pygame.image.load("./images/left_mario.png").convert_alpha()
-        marioleft = pygame.transform.scale(marioleft, (150, 150))
         screen1.blit(marioleft, (785, 180))
-
-        # enemies on top of the menu to decorate
-        greenturtle1 = pygame.image.load("./images/green_turtle1.png").convert_alpha()
-        greenturtle1 = pygame.transform.scale(greenturtle1, (50, 50))
-        screen1.blit(greenturtle1, (538, 10))
-        grayturtle1 = pygame.image.load("./images/gray_turtle1.png").convert_alpha()
-        grayturtle1 = pygame.transform.scale(grayturtle1, (50, 50))
-        screen1.blit(grayturtle1, (418, 10))
-        greenwizard = pygame.image.load("./images/green_cloud.png").convert_alpha()
-        greenwizard = pygame.transform.scale(greenwizard, (50, 50))
-        screen1.blit(greenwizard, (358, 10))
-        brownturtle1 = pygame.image.load("./images/brown_turtle1.png").convert_alpha()
-        brownturtle1 = pygame.transform.scale(brownturtle1, (50, 50))
         screen1.blit(brownturtle1, (298, 10))
-        browncloud = pygame.image.load("./images/brown_cloud.png").convert_alpha()
-        browncloud = pygame.transform.scale(browncloud, (50, 50))
+        screen1.blit(entryspace, (245, 230))
+        screen1.blit(greenturtle1, (538, 10))
+        screen1.blit(grayturtle1, (418, 10))
+        screen1.blit(greenwizard, (358, 10))
         screen1.blit(browncloud, (478, 10))
-        graycloud = pygame.image.load("./images/gray_cloud.png").convert_alpha()
-        graycloud = pygame.transform.scale(graycloud, (50, 50))
         screen1.blit(graycloud, (598, 10))
-        redturtle1 = pygame.image.load("./images/red_turtle1.png").convert_alpha()
-        redturtle1 = pygame.transform.scale(redturtle1, (50, 50))
         screen1.blit(redturtle1, (658, 10))
-        whitebullet = pygame.image.load("./images/white_bullet.png").convert_alpha()
-        whitebullet = pygame.transform.scale(whitebullet, (50, 50))
         screen1.blit(whitebullet, (238, 10))
-        cyanbullet = pygame.image.load("./images/cyan_bullet.png").convert_alpha()
-        cyanbullet = pygame.transform.scale(cyanbullet, (50, 50))
         screen1.blit(cyanbullet, (718, 10))
 
         # images of the level buttons
@@ -272,6 +280,80 @@ def level1(namebox):
     # to work with the frames (timing)
     clock = pygame.time.Clock()
 
+    class marioplayer:
+        def __init__(self, x, y, health = 3):
+            self.x = x
+            self.y = y
+            self.health = health
+            self.left = True
+            #self.mario1 = mario1
+            self.cool_down_counter = 0
+
+        # to draw the capitalist ship
+        def draw(self, screen1):
+            if self.left:
+                screen1.blit(mario2, (self.x, self.y))
+            else:
+                screen1.blit(mario1, (self.x, self.y))
+
+    class enemies():
+        def __init__(self, x, y, xspeed, yspeed):
+            self.x = x
+            self.y = y
+            self.xspeed = xspeed
+            self.yspeed = yspeed
+
+        def moveenemy(self):
+            if self.x <=0:
+                self.xspeed = random.randint(1,5)
+                self.yspeed = random.randint(-5,5)
+            if self.x + self.xspeed +50 >= 1000:
+                self.xspeed = random.randint(1,5)*-1
+                self.yspeed = random.randint(-5,5)
+            if self.y <=0:
+                self.yspeed = random.randint(1,5)
+                self.xspeed = random.randint(-5,5)
+            if self.y + self.yspeed +50 >= 550:
+                self.yspeed = random.randint(1,5)*-1
+                self.xspeed = random.randint(-5,5)
+            else:
+                self.x += self.xspeed
+                self.y += self.yspeed
+
+        def draw(self, screen1):
+            screen1.blit(graycloud, (self.x, self.y))
+
+    def collisions(hits, marioplayer):
+        global life
+        for i in hits:
+            if marioplayer.x < i.x < marioplayer.x + 100:
+                if marioplayer.y < i.y < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+            elif marioplayer.x < i.x +50 < marioplayer.x + 100:
+                if marioplayer.y < i.y < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+            elif marioplayer.x < i.x < marioplayer.x + 100:
+                if marioplayer.y < i.y +50 < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+            elif marioplayer.x < i.x +50 < marioplayer.x + 100:
+                if marioplayer.y < i.y + 50 < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+
+    # characters on screen
+    mariogame = marioplayer(500, 335)
+    movingenemy = []
+    for i in range(7):
+        enemy1 = enemies(random.randint(100,800), random.randint(100,500), random.randint(-5,5), random.randint(-5,5))
+        movingenemy += [enemy1]
+
+    #life
+    global life
+    life = 3
+
     # loop that keeps the window active
     while True:
         
@@ -279,7 +361,7 @@ def level1(namebox):
         clock.tick(FPS)
 
         # background image
-        background = pygame.image.load(mainscreen)
+        background = pygame.image.load(level1_screen)
         screen1.blit(background, (0, 0))
 
         # backbutton
@@ -321,12 +403,54 @@ def level1(namebox):
                              menu()
                              flag = 0
 
+        # the keys which the player can play
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            mariogame.left = True
+            if mariogame.x <= 0:
+                pass
+            else:
+                mariogame.x -= player_vel 
+        if keys[pygame.K_RIGHT]:
+            mariogame.left = False
+            if mariogame.x + 50 + player_vel >= 1000 - 50:
+                pass
+            else:
+                mariogame.x += player_vel
+        if keys[pygame.K_DOWN]:
+            if mariogame.y + 50 + player_vel >= 650 - 100:
+                pass
+            else:
+                mariogame.y += player_vel
+        if keys[pygame.K_UP]:
+            if mariogame.y <= 0:
+                pass
+            else:
+                mariogame.y -= player_vel
+
         # showing timer per seconds-minutes
         if secondstimer == 60:
             secondstimer = 0
             time += 1
         else:
             secondstimer += 1
+
+        #characters on screen
+        mariogame.draw(screen1)
+
+        # collisions between characters
+        collisions(movingenemy, mariogame)
+
+        #move enemy
+        for enemy1 in movingenemy:
+            enemy1.moveenemy()
+            enemy1.draw(screen1)
+
+        #player velocity
+        player_vel = 6
+
+        if life <= 0:
+            run = False
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
@@ -340,14 +464,16 @@ def level2(namebox):
     # to work with the frames (timing)
     clock = pygame.time.Clock()
 
+    run = True
+
     # loop that keeps the window active
-    while True:
+    while run:
         
         # to delimit the movement of the frames
         clock.tick(FPS)
 
         # background image
-        background = pygame.image.load(mainscreen)
+        background = pygame.image.load(level2_screen)
         screen1.blit(background, (0, 0))
 
         # backbutton
@@ -415,7 +541,7 @@ def level3(namebox):
         clock.tick(FPS)
 
         # background image
-        background = pygame.image.load(mainscreen)
+        background = pygame.image.load(level3_screen)
         screen1.blit(background, (0, 0))
 
         # backbutton
