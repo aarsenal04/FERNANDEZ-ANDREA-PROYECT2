@@ -449,9 +449,6 @@ def level1(namebox):
         #player velocity
         player_vel = 6
 
-        if life <= 0:
-            run = False
-
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
