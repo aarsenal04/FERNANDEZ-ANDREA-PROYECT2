@@ -272,13 +272,17 @@ def information():
         pygame.display.update()
 
 def level1(namebox):
-    
+    global score
+    score=0 
     # for time
     time = 0
     secondstimer = 0
-
     # to work with the frames (timing)
     clock = pygame.time.Clock()
+
+
+    #Funtion for the score
+   
 
     class marioplayer:
         def __init__(self, x, y, health = 3):
@@ -400,6 +404,7 @@ def level1(namebox):
                  # get the click on the back button
                  if mouse_x >= 20 and mouse_x <= 120:
                          if mouse_y >= 600 and mouse_y <= 628:
+                             life = 3
                              menu()
                              flag = 0
 
@@ -448,6 +453,9 @@ def level1(namebox):
 
         #player velocity
         player_vel = 6
+
+        if life <= 0:
+            run = False
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
@@ -626,3 +634,5 @@ def leader_board():
         pygame.display.update()
 
 menu()
+
+#*****************
