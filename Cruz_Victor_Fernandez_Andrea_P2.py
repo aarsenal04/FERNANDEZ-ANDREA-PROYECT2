@@ -633,6 +633,8 @@ def level2(namebox, sscore=0):
             secondstimer = 0
             time += 1
             score += 3
+        elif time == 60 and life >= 1:
+            run = level3(namebox, score)
         else:
             secondstimer += 1
 
@@ -825,6 +827,8 @@ def level3(namebox, ssscore=0):
             secondstimer = 0
             time += 1
             score += 5
+        elif time == 60 and life >= 1:
+            run = menu()
         else:
             secondstimer += 1
 
