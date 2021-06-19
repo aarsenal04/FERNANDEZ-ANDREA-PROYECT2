@@ -350,7 +350,7 @@ def level1(namebox):
     mariogame = marioplayer(500, 335)
     movingenemy = []
     for i in range(4):
-        enemy1 = enemies(random.randint(100,800), random.randint(100,500), random.randint(-5,5), random.randint(-5,5))
+        enemy1 = enemies(random.randint(100,800), random.randint(50,150), random.randint(-5,5), random.randint(-5,5))
         movingenemy += [enemy1]
 
     #life
@@ -439,8 +439,8 @@ def level1(namebox):
             secondstimer = 0
             time += 1
             score += 1
-        elif time == 60 and life >= 1:
-            run = level2(namebox, score)
+        if time == 60 and life >= 1:
+            level2(namebox, score)
         else:
             secondstimer += 1
 
@@ -544,7 +544,7 @@ def level2(namebox, sscore=0):
     mariogame = marioplayer(500, 335)
     movingenemy = []
     for i in range(8):
-        enemy1 = enemies(random.randint(100,800), random.randint(100,500), random.randint(-5,5), random.randint(-5,5))
+        enemy1 = enemies(random.randint(100,800), random.randint(50,150), random.randint(-5,5), random.randint(-5,5))
         movingenemy += [enemy1]
 
     #life
@@ -738,7 +738,7 @@ def level3(namebox, ssscore=0):
     mariogame = marioplayer(500, 335)
     movingenemy = []
     for i in range(12):
-        enemy1 = enemies(random.randint(100,800), random.randint(100,500), random.randint(-5,5), random.randint(-5,5))
+        enemy1 = enemies(random.randint(100,800), random.randint(50,150), random.randint(-5,5), random.randint(-5,5))
         movingenemy += [enemy1]
 
     #life
@@ -827,7 +827,7 @@ def level3(namebox, ssscore=0):
             secondstimer = 0
             time += 1
             score += 5
-        elif time == 60 and life >= 1:
+        if time == 60 and life >= 1:
             run = menu()
         else:
             secondstimer += 1
