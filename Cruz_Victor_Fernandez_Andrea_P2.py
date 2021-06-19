@@ -272,17 +272,16 @@ def information():
         pygame.display.update()
 
 def level1(namebox):
+
     global score
     score=0 
+
     # for time
     time = 0
     secondstimer = 0
+
     # to work with the frames (timing)
     clock = pygame.time.Clock()
-
-
-    #Funtion for the score
-   
 
     class marioplayer:
         def __init__(self, x, y, health = 3):
@@ -350,7 +349,7 @@ def level1(namebox):
     # characters on screen
     mariogame = marioplayer(500, 335)
     movingenemy = []
-    for i in range(7):
+    for i in range(4):
         enemy1 = enemies(random.randint(100,800), random.randint(100,500), random.randint(-5,5), random.randint(-5,5))
         movingenemy += [enemy1]
 
@@ -358,8 +357,10 @@ def level1(namebox):
     global life
     life = 3
 
+    run = True
+
     # loop that keeps the window active
-    while True:
+    while run:
         
         # to delimit the movement of the frames
         clock.tick(FPS)
@@ -434,9 +435,10 @@ def level1(namebox):
                 mariogame.y -= player_vel
 
         # showing timer per seconds-minutes
-        if secondstimer == 60:
+        if secondstimer == 59:
             secondstimer = 0
             time += 1
+            score += 1
         else:
             secondstimer += 1
 
@@ -460,7 +462,200 @@ def level1(namebox):
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
-def level2(namebox):
+def level2(namebox, sscore=0):
+
+    # importing score from the first level
+    global score
+    score = sscore
+
+    # for time
+    time = 0
+    secondstimer = 0
+
+    # to work with the frames (timing)
+    clock = pygame.time.Clock()
+
+    class marioplayer:
+        def __init__(self, x, y, health = 3):
+            self.x = x
+            self.y = y
+            self.health = health
+            self.left = True
+            #self.mario1 = mario1
+            self.cool_down_counter = 0
+
+        # to draw the capitalist ship
+        def draw(self, screen1):
+            if self.left:
+                screen1.blit(mario2, (self.x, self.y))
+            else:
+                screen1.blit(mario1, (self.x, self.y))
+
+    class enemies():
+        def __init__(self, x, y, xspeed, yspeed):
+            self.x = x
+            self.y = y
+            self.xspeed = xspeed
+            self.yspeed = yspeed
+
+        def moveenemy(self):
+            if self.x <=0:
+                self.xspeed = random.randint(1,5)
+                self.yspeed = random.randint(-5,5)
+            if self.x + self.xspeed +50 >= 1000:
+                self.xspeed = random.randint(1,5)*-1
+                self.yspeed = random.randint(-5,5)
+            if self.y <=0:
+                self.yspeed = random.randint(1,5)
+                self.xspeed = random.randint(-5,5)
+            if self.y + self.yspeed +50 >= 550:
+                self.yspeed = random.randint(1,5)*-1
+                self.xspeed = random.randint(-5,5)
+            else:
+                self.x += self.xspeed
+                self.y += self.yspeed
+
+        def draw(self, screen1):
+            screen1.blit(greenwizard, (self.x, self.y))
+
+    def collisions(hits, marioplayer):
+        global life
+        for i in hits:
+            if marioplayer.x < i.x < marioplayer.x + 100:
+                if marioplayer.y < i.y < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+            elif marioplayer.x < i.x +50 < marioplayer.x + 100:
+                if marioplayer.y < i.y < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+            elif marioplayer.x < i.x < marioplayer.x + 100:
+                if marioplayer.y < i.y +50 < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+            elif marioplayer.x < i.x +50 < marioplayer.x + 100:
+                if marioplayer.y < i.y + 50 < marioplayer.y + 100:
+                    hits.remove(i)
+                    life -= 1
+
+    # characters on screen
+    mariogame = marioplayer(500, 335)
+    movingenemy = []
+    for i in range(8):
+        enemy1 = enemies(random.randint(100,800), random.randint(100,500), random.randint(-5,5), random.randint(-5,5))
+        movingenemy += [enemy1]
+
+    #life
+    global life
+    life = 3
+
+    run = True
+
+    # loop that keeps the window active
+    while run:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # background image
+        background = pygame.image.load(level2_screen)
+        screen1.blit(background, (0, 0))
+
+        # backbutton
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255, 255, 255))
+        screen1.blit(backbutton, (20, 600))
+
+        # name, level, time, life on screen
+        labelfont = pygame.font.Font("./images/mariofont.ttf", 20)
+        namebox_label = labelfont.render(f"{namebox}", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (50, 20))
+        level1_label = labelfont.render(f"world", 0, (255, 255, 255))
+        screen1.blit(level1_label, (310, 20))
+        levelnumber = labelfont.render(f"2", 0, (255, 255, 255))
+        screen1.blit(levelnumber, (340, 40))
+        time_label = labelfont.render(f"time", 1, (255, 255, 255))
+        screen1.blit(time_label, (570, 20))
+        timenumbers = labelfont.render(f"{time}", 1, (255, 255, 255))
+        screen1.blit(timenumbers, (585, 40))
+        life_label = labelfont.render(f"life", 1, (255, 255, 255))
+        screen1.blit(life_label, (820, 20))
+        lifenumber = labelfont.render(f"x{life}", 1, (255, 255, 255))
+        screen1.blit(lifenumber, (828, 40))
+        score_label = labelfont.render(f"{score}", 1, (255, 255, 255))
+        screen1.blit(score_label, (50, 40))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             life = 3
+                             menu()
+                             flag = 0
+
+        # the keys which the player can play
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            mariogame.left = True
+            if mariogame.x <= 0:
+                pass
+            else:
+                mariogame.x -= player_vel 
+        if keys[pygame.K_RIGHT]:
+            mariogame.left = False
+            if mariogame.x + 50 + player_vel >= 1000 - 50:
+                pass
+            else:
+                mariogame.x += player_vel
+        if keys[pygame.K_DOWN]:
+            if mariogame.y + 50 + player_vel >= 650 - 100:
+                pass
+            else:
+                mariogame.y += player_vel
+        if keys[pygame.K_UP]:
+            if mariogame.y <= 0:
+                pass
+            else:
+                mariogame.y -= player_vel
+
+        # showing timer per seconds-minutes
+        if secondstimer == 59:
+            secondstimer = 0
+            time += 1
+            score += 1
+        else:
+            secondstimer += 1
+
+        #characters on screen
+        mariogame.draw(screen1)
+
+        # collisions between characters
+        collisions(movingenemy, mariogame)
+
+        #move enemy
+        for enemy1 in movingenemy:
+            enemy1.moveenemy()
+            enemy1.draw(screen1)
+
+        #player velocity
+        player_vel = 6
+
+        if life <= 0:
+            run = False
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+
+"""def level2(namebox):
     
     # for time
     time = 0
@@ -471,9 +666,12 @@ def level2(namebox):
 
     run = True
 
+    global score
+    score = 0
+
     # loop that keeps the window active
     while run:
-        
+
         # to delimit the movement of the frames
         clock.tick(FPS)
 
@@ -524,6 +722,7 @@ def level2(namebox):
         if secondstimer == 60:
             secondstimer = 0
             time += 1
+            score += 1
         else:
             secondstimer += 1
 
@@ -596,7 +795,7 @@ def level3(namebox):
             secondstimer += 1
 
         # to make the display surface appears on the user’s monitor (changes)
-        pygame.display.update()
+        pygame.display.update()"""
 
 def leader_board():
     
@@ -634,5 +833,3 @@ def leader_board():
         pygame.display.update()
 
 menu()
-
-#*****************
