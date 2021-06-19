@@ -632,7 +632,7 @@ def level2(namebox, sscore=0):
         if secondstimer == 59:
             secondstimer = 0
             time += 1
-            score += 1
+            score += 3
         else:
             secondstimer += 1
 
@@ -824,7 +824,7 @@ def level3(namebox, ssscore=0):
         if secondstimer == 59:
             secondstimer = 0
             time += 1
-            score += 1
+            score += 5
         else:
             secondstimer += 1
 
