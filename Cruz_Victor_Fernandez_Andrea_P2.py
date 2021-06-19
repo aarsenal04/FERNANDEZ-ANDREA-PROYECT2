@@ -439,6 +439,8 @@ def level1(namebox):
             secondstimer = 0
             time += 1
             score += 1
+        elif time == 60 and life >= 1:
+            run = level2(namebox, score)
         else:
             secondstimer += 1
 
