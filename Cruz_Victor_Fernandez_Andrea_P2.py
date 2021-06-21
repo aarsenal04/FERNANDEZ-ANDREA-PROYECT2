@@ -21,7 +21,7 @@ pygame.display.set_icon(icon)
 # to start writing the name(name input)
 namebox = ""
 
-# player´s life
+# player´s life from the beggining of each level
 life = 3
 
 # images for backgrounds
@@ -30,6 +30,9 @@ level1_screen = ("./images/background.png")
 level2_screen = ("./images/level2bg.jpg")
 level3_screen = ("./images/level3bg.png")
 finalscreen = ("./images/finalbg.png")
+instructiontext = ("./images/instructions.png")
+infoscreen = ("./images/information.png")
+endgamescreen = ("./images/finalbg.png")
 
 # characters
 mario1 = pygame.image.load("./images/right_mario.png")
@@ -45,14 +48,13 @@ graycloud = pygame.transform.scale(graycloud, (50, 50))
 marioleft = pygame.image.load("./images/left_mario.png").convert_alpha()
 marioleft = pygame.transform.scale(marioleft, (150, 150))
 
-instructiontext = ("./images/instructions.png")
-infoscreen = ("./images/information.png")
-
 #global for score 
 score = 0
 
+# menu screen (first screen)
 def menu():
 
+    # global for the player to write the game
     global namebox
 
     # loop that keeps the window active
@@ -121,6 +123,7 @@ def menu():
                  pygame.quit()
                  sys.exit()
 
+            # to check the mouse clicks
              if click.type == MOUSEBUTTONUP:
                  mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -206,6 +209,7 @@ def instructions():
                  pygame.quit()
                  sys.exit()
 
+            # to check the mouse clicks
              if click.type == MOUSEBUTTONUP:
                  mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -218,6 +222,7 @@ def instructions():
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
+# info screen (credits)
 def information():
     
     # loop that keeps the window active
@@ -241,6 +246,7 @@ def information():
                  pygame.quit()
                  sys.exit()
 
+            # to check the mouse clicks
              if click.type == MOUSEBUTTONUP:
                  mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -253,8 +259,10 @@ def information():
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
+# level 1 screen
 def level1(namebox):
 
+    # global for the player´s score
     global score
     score=0 
 
@@ -265,6 +273,7 @@ def level1(namebox):
     # to work with the frames (timing)
     clock = pygame.time.Clock()
 
+    # class for the character player
     class marioplayer:
         def __init__(self, x, y, health = 3):
             self.x = x
@@ -281,6 +290,7 @@ def level1(namebox):
             else:
                 screen1.blit(mario1, (self.x, self.y))
 
+    # class for the enemies
     class enemies():
         def __init__(self, x, y, xspeed, yspeed):
             self.x = x
@@ -421,8 +431,6 @@ def level1(namebox):
             secondstimer = 0
             time += 1
             score += 1
-        if time == 60 and life >= 1:
-            level2(namebox, score)
         else:
             secondstimer += 1
 
@@ -440,12 +448,17 @@ def level1(namebox):
         #player velocity
         player_vel = 6
 
+        # to run out if the player lose
         if life <= 0:
             run = False
+        elif time == 60 and life >= 1:
+            level2(namebox, score)
+            flag = 0
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
+# playing in level 2
 def level2(namebox, sscore=0):
 
     # importing score from the first level
@@ -459,13 +472,13 @@ def level2(namebox, sscore=0):
     # to work with the frames (timing)
     clock = pygame.time.Clock()
 
+    # player character class
     class marioplayer:
         def __init__(self, x, y, health = 3):
             self.x = x
             self.y = y
             self.health = health
             self.left = True
-            #self.mario1 = mario1
             self.cool_down_counter = 0
 
         # to draw the capitalist ship
@@ -475,6 +488,7 @@ def level2(namebox, sscore=0):
             else:
                 screen1.blit(mario1, (self.x, self.y))
 
+    # class for the enemies
     class enemies():
         def __init__(self, x, y, xspeed, yspeed):
             self.x = x
@@ -482,6 +496,7 @@ def level2(namebox, sscore=0):
             self.xspeed = xspeed
             self.yspeed = yspeed
 
+        # moving the enemy
         def moveenemy(self):
             if self.x <=0:
                 self.xspeed = random.randint(1,5)
@@ -499,9 +514,11 @@ def level2(namebox, sscore=0):
                 self.x += self.xspeed
                 self.y += self.yspeed
 
+        # drawing the enemy on screen
         def draw(self, screen1):
             screen1.blit(greenwizard, (self.x, self.y))
 
+    # collisions between the player and the enemies
     def collisions(hits, marioplayer):
         global life
         for i in hits:
@@ -533,6 +550,7 @@ def level2(namebox, sscore=0):
     global life
     life = 3
 
+    # for the while 
     run = True
 
     # loop that keeps the window active
@@ -575,6 +593,7 @@ def level2(namebox, sscore=0):
                  pygame.quit()
                  sys.exit()
 
+            # to check the mouse clicks
              if click.type == MOUSEBUTTONUP:
                  mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -584,6 +603,9 @@ def level2(namebox, sscore=0):
                              life = 3
                              menu()
                              flag = 0
+
+         #player velocity
+        player_vel = 6
 
         # the keys which the player can play
         keys = pygame.key.get_pressed()
@@ -626,20 +648,19 @@ def level2(namebox, sscore=0):
         # collisions between characters
         collisions(movingenemy, mariogame)
 
-        #move enemy
+        # move enemy
         for enemy1 in movingenemy:
             enemy1.moveenemy()
             enemy1.draw(screen1)
 
-        #player velocity
-        player_vel = 6
-
+        # to run out if the player lose
         if life <= 0:
             run = False
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
+# screen for level 3
 def level3(namebox, ssscore=0):
 
     # importing score from the first level
@@ -653,6 +674,7 @@ def level3(namebox, ssscore=0):
     # to work with the frames (timing)
     clock = pygame.time.Clock()
 
+    # class for the character player
     class marioplayer:
         def __init__(self, x, y, health = 3):
             self.x = x
@@ -669,6 +691,7 @@ def level3(namebox, ssscore=0):
             else:
                 screen1.blit(mario1, (self.x, self.y))
 
+    # class for the enemies
     class enemies():
         def __init__(self, x, y, xspeed, yspeed):
             self.x = x
@@ -676,6 +699,7 @@ def level3(namebox, ssscore=0):
             self.xspeed = xspeed
             self.yspeed = yspeed
 
+        # moving the enemies
         def moveenemy(self):
             if self.x <=0:
                 self.xspeed = random.randint(1,5)
@@ -693,9 +717,11 @@ def level3(namebox, ssscore=0):
                 self.x += self.xspeed
                 self.y += self.yspeed
 
+        # drawing the enemy on screen
         def draw(self, screen1):
             screen1.blit(browncloud, (self.x, self.y))
 
+    # collisions between the player and the enemies
     def collisions(hits, marioplayer):
         global life
         for i in hits:
@@ -727,6 +753,7 @@ def level3(namebox, ssscore=0):
     global life
     life = 3
 
+    # to run in the while
     run = True
 
     # loop that keeps the window active
@@ -750,7 +777,7 @@ def level3(namebox, ssscore=0):
         screen1.blit(namebox_label, (50, 20))
         level1_label = labelfont.render(f"world", 0, (255, 255, 255))
         screen1.blit(level1_label, (310, 20))
-        levelnumber = labelfont.render(f"2", 0, (255, 255, 255))
+        levelnumber = labelfont.render(f"3", 0, (255, 255, 255))
         screen1.blit(levelnumber, (340, 40))
         time_label = labelfont.render(f"time", 1, (255, 255, 255))
         screen1.blit(time_label, (570, 20))
@@ -769,6 +796,7 @@ def level3(namebox, ssscore=0):
                  pygame.quit()
                  sys.exit()
 
+            # to read the mouse click
              if click.type == MOUSEBUTTONUP:
                  mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -778,6 +806,9 @@ def level3(namebox, ssscore=0):
                              life = 3
                              menu()
                              flag = 0
+
+        #player velocity
+        player_vel = 6
 
         # the keys which the player can play
         keys = pygame.key.get_pressed()
@@ -809,8 +840,8 @@ def level3(namebox, ssscore=0):
             secondstimer = 0
             time += 1
             score += 5
-        if time == 60 and life >= 1:
-            run = menu()
+        if time == 2 and life >= 1:
+            run = endgame(namebox, score)
         else:
             secondstimer += 1
 
@@ -825,16 +856,14 @@ def level3(namebox, ssscore=0):
             enemy1.moveenemy()
             enemy1.draw(screen1)
 
-        #player velocity
-        player_vel = 6
-
+        # if the player´s life is 0, the level will stop
         if life <= 0:
             run = False
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
-
+# leaderboard screen
 def leader_board():
     
     # loop that keeps the window active
@@ -858,6 +887,7 @@ def leader_board():
                  pygame.quit()
                  sys.exit()
 
+            # to read the mouse click
              if click.type == MOUSEBUTTONUP:
                  mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -870,4 +900,64 @@ def leader_board():
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
 
+# screen for the loose or winning
+def endgame(namebox, score):
+
+    # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # info background image
+        background = pygame.image.load(endgamescreen)
+        screen1.blit(background, (0, 0))
+
+        # backbutton and button to open the leaderboard screen
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255,255,255))
+        screen1.blit(backbutton, (20, 600))
+        buttonleader = pygame.font.Font("./images/mariofont.ttf", 40)
+        buttonleader = buttonleader.render("leaderboard", 0, (255,255,255))
+        screen1.blit(buttonleader, (700, 600))
+
+        # name of the player and final score for the screen presentation
+        labelfont = pygame.font.Font("./images/mariofont.ttf", 70)
+        namebox_label = labelfont.render(f"player:", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (350, 160))
+        namebox_label = labelfont.render(f"{namebox}", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (350, 220))
+        score_label = labelfont.render(f"{score}", 1, (255, 255, 255))
+        screen1.blit(score_label, (490, 410))
+        score_label = labelfont.render(f"score:", 1, (255, 255, 255))
+        screen1.blit(score_label, (490, 350))
+        score_label = labelfont.render(f"MARIO WINS!", 1, (255, 255, 255))
+        screen1.blit(score_label, (225, 20))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+            # to read the mouse click
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+                             
+                 # get the click on the leaderboard button
+                 if mouse_x >= 700 and mouse_x <= 980:
+                     if mouse_y >= 600 and mouse_y <= 628:
+                         leader_board()
+                         flag = 0 
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+# to start from the menu screen
 menu()
