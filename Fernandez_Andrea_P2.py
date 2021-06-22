@@ -481,7 +481,7 @@ def level1(namebox):
 
         # to run out if the player lose
         if life <= 0:
-            run = menu()
+            run = losescreen(namebox, score)
         elif time == 60 and life >= 1:
             level2(namebox, score)
             flag = 0
@@ -694,7 +694,7 @@ def level2(namebox, sscore=0):
 
         # to run out if the player lose
         if life <= 0:
-            run = menu()
+            run = losescreen(namebox, score)
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
@@ -904,7 +904,7 @@ def level3(namebox, ssscore=0):
 
         # if the player´s life is 0, the level will stop
         if life <= 0:
-            run = menu()
+            run = losescreen(namebox, score)
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
@@ -949,6 +949,10 @@ def leader_board():
 # screen for the loose or winning
 def endgame(namebox, score):
 
+    # music for the screen
+    pygame.mixer.music.load("./images/winsong.mp3")
+    pygame.mixer.music.play(-1,0,0)
+
     # loop that keeps the window active
     while True:
         
@@ -979,6 +983,69 @@ def endgame(namebox, score):
         screen1.blit(score_label, (490, 350))
         score_label = labelfont.render(f"MARIO WINS!", 1, (255, 255, 255))
         screen1.blit(score_label, (225, 20))
+
+        # checks if the player clicks the back button
+        for click in pygame.event.get():
+             if click.type == QUIT:
+                 pygame.quit()
+                 sys.exit()
+
+            # to read the mouse click
+             if click.type == MOUSEBUTTONUP:
+                 mouse_x, mouse_y = pygame.mouse.get_pos()
+
+                 # get the click on the back button
+                 if mouse_x >= 20 and mouse_x <= 120:
+                         if mouse_y >= 600 and mouse_y <= 628:
+                             menu()
+                             flag = 0
+                             
+                 # get the click on the leaderboard button
+                 if mouse_x >= 700 and mouse_x <= 980:
+                     if mouse_y >= 600 and mouse_y <= 628:
+                         leader_board()
+                         flag = 0 
+
+        # to make the display surface appears on the user’s monitor (changes)
+        pygame.display.update()
+
+# screen if the player lose the game
+def losescreen(namebox, score):
+
+    # music for the screen
+    pygame.mixer.music.load("./images/losesong.mp3")
+    pygame.mixer.music.play(-1,0,0)
+
+    # loop that keeps the window active
+    while True:
+        
+        # to delimit the movement of the frames
+        clock.tick(FPS)
+
+        # info background image
+        background = pygame.image.load(endgamescreen)
+        screen1.blit(background, (0, 0))
+
+        # backbutton and button to open the leaderboard screen
+        buttonfont = pygame.font.Font("./images/mariofont.ttf", 40)
+        backbutton = buttonfont.render("back", 0, (255,255,255))
+        screen1.blit(backbutton, (20, 600))
+        buttonleader = pygame.font.Font("./images/mariofont.ttf", 40)
+        buttonleader = buttonleader.render("leaderboard", 0, (255,255,255))
+        screen1.blit(buttonleader, (700, 600))
+
+        # name of the player and final score for the screen presentation
+        labelfont = pygame.font.Font("./images/mariofont.ttf", 70)
+        namebox_label = labelfont.render(f"player:", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (350, 160))
+        namebox_label = labelfont.render(f"{namebox}", 1, (255, 255, 255))
+        screen1.blit(namebox_label, (350, 220))
+        score_label = labelfont.render(f"{score}", 1, (255, 255, 255))
+        screen1.blit(score_label, (490, 410))
+        score_label = labelfont.render(f"score:", 1, (255, 255, 255))
+        screen1.blit(score_label, (490, 350))
+        score_label = labelfont.render(f"INVADED!", 1, (255, 255, 255))
+        screen1.blit(score_label, (335, 20))
 
         # checks if the player clicks the back button
         for click in pygame.event.get():
