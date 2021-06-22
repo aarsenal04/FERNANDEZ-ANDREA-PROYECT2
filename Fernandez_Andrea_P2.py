@@ -245,7 +245,7 @@ def instructions():
 def information():
 
     # music for the screen
-    pygame.mixer.music.load("./images/simpsons          .mp3")
+    pygame.mixer.music.load("./images/simpsons.mp3")
     pygame.mixer.music.play(-1,0,0)
     
     # loop that keeps the window active
