@@ -481,7 +481,7 @@ def level1(namebox):
 
         # to run out if the player lose
         if life <= 0:
-            run = False
+            run = menu()
         elif time == 60 and life >= 1:
             level2(namebox, score)
             flag = 0
@@ -581,7 +581,7 @@ def level2(namebox, sscore=0):
     # characters on screen
     mariogame = marioplayer(500, 335)
     movingenemy = []
-    for i in range(8):
+    for i in range(6):
         enemy1 = enemies(random.randint(100,800), random.randint(50,150), random.randint(-5,5), random.randint(-5,5))
         movingenemy += [enemy1]
 
@@ -694,7 +694,7 @@ def level2(namebox, sscore=0):
 
         # to run out if the player lose
         if life <= 0:
-            run = False
+            run = menu()
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
@@ -791,7 +791,7 @@ def level3(namebox, ssscore=0):
     # characters on screen
     mariogame = marioplayer(500, 335)
     movingenemy = []
-    for i in range(12):
+    for i in range(10):
         enemy1 = enemies(random.randint(100,800), random.randint(50,150), random.randint(-5,5), random.randint(-5,5))
         movingenemy += [enemy1]
 
@@ -904,7 +904,7 @@ def level3(namebox, ssscore=0):
 
         # if the player´s life is 0, the level will stop
         if life <= 0:
-            run = False
+            run = menu()
 
         # to make the display surface appears on the user’s monitor (changes)
         pygame.display.update()
