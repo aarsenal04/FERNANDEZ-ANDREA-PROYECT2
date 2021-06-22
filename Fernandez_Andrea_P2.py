@@ -10,6 +10,9 @@ clock = pygame.time.Clock()
 # to execute pygame
 pygame.init()
 
+# to execute the music
+pygame.mixer.init()
+
 # main screen and size
 screen1 = pygame.display.set_mode((1000, 650))
 
@@ -48,11 +51,18 @@ graycloud = pygame.transform.scale(graycloud, (50, 50))
 marioleft = pygame.image.load("./images/left_mario.png").convert_alpha()
 marioleft = pygame.transform.scale(marioleft, (150, 150))
 
+# hit sound
+hits = pygame.mixer.Sound("./images/hit.mp3")
+
 #global for score 
 score = 0
 
 # menu screen (first screen)
 def menu():
+
+    #music for screen
+    pygame.mixer.music.load("./images/entertainer.mp3")
+    pygame.mixer.music.play(-1,0,0)
 
     # global for the player to write the game
     global namebox
@@ -70,6 +80,7 @@ def menu():
         # font and fonts´sizes
         gamefont = pygame.font.Font("./images/mariofont.ttf", 50)
         gamefont2 = pygame.font.Font("./images/mariofont.ttf", 35)
+        cpfont = pygame.font.Font("./images/mariofont.ttf", 20)
 
         # caption background
         entryspace = pygame.image.load("./images/entryspace.png").convert_alpha()
@@ -91,6 +102,10 @@ def menu():
         # levels section
         levelsection = gamefont.render("levels", 0, (222, 89, 24))
         screen1.blit(levelsection, (160, 350))
+
+        # copyright 
+        copyright = cpfont.render("Nintendo theme used for educational purposes", 0, (0,0,0))
+        screen1.blit(copyright, (210, 300))
 
         # about
         about = gamefont.render("about", 0, (222, 89, 24))
@@ -188,6 +203,10 @@ def menu():
 # instrcutions screen
 def instructions():
 
+    # music for the screen
+    pygame.mixer.music.load("./images/chariots.mp3")
+    pygame.mixer.music.play(-1,0,0)
+
     # loop that keeps the window active
     while True:
         
@@ -224,6 +243,10 @@ def instructions():
 
 # info screen (credits)
 def information():
+
+    # music for the screen
+    pygame.mixer.music.load("./images/simpsons          .mp3")
+    pygame.mixer.music.play(-1,0,0)
     
     # loop that keeps the window active
     while True:
@@ -261,6 +284,10 @@ def information():
 
 # level 1 screen
 def level1(namebox):
+
+    #music for screen
+    pygame.mixer.music.load("./images/chicken.mp3")
+    pygame.mixer.music.play(-1,0,0)
 
     # global for the player´s score
     global score
@@ -302,15 +329,19 @@ def level1(namebox):
             if self.x <=0:
                 self.xspeed = random.randint(1,5)
                 self.yspeed = random.randint(-5,5)
+                hits.play()
             if self.x + self.xspeed +50 >= 1000:
                 self.xspeed = random.randint(1,5)*-1
                 self.yspeed = random.randint(-5,5)
+                hits.play()
             if self.y <=0:
                 self.yspeed = random.randint(1,5)
                 self.xspeed = random.randint(-5,5)
+                hits.play()
             if self.y + self.yspeed +50 >= 550:
                 self.yspeed = random.randint(1,5)*-1
                 self.xspeed = random.randint(-5,5)
+                hits.play()
             else:
                 self.x += self.xspeed
                 self.y += self.yspeed
@@ -461,6 +492,10 @@ def level1(namebox):
 # playing in level 2
 def level2(namebox, sscore=0):
 
+    #music for screen
+    pygame.mixer.music.load("./images/tetris.mp3")
+    pygame.mixer.music.play(-1,0,0)
+
     # importing score from the first level
     global score
     score = sscore
@@ -501,15 +536,19 @@ def level2(namebox, sscore=0):
             if self.x <=0:
                 self.xspeed = random.randint(1,5)
                 self.yspeed = random.randint(-5,5)
+                hits.play()
             if self.x + self.xspeed +50 >= 1000:
                 self.xspeed = random.randint(1,5)*-1
                 self.yspeed = random.randint(-5,5)
+                hits.play()
             if self.y <=0:
                 self.yspeed = random.randint(1,5)
                 self.xspeed = random.randint(-5,5)
+                hits.play()
             if self.y + self.yspeed +50 >= 550:
                 self.yspeed = random.randint(1,5)*-1
                 self.xspeed = random.randint(-5,5)
+                hits.play()
             else:
                 self.x += self.xspeed
                 self.y += self.yspeed
@@ -574,7 +613,7 @@ def level2(namebox, sscore=0):
         screen1.blit(namebox_label, (50, 20))
         level1_label = labelfont.render(f"world", 0, (255, 255, 255))
         screen1.blit(level1_label, (310, 20))
-        levelnumber = labelfont.render(f"3", 0, (255, 255, 255))
+        levelnumber = labelfont.render(f"2", 0, (255, 255, 255))
         screen1.blit(levelnumber, (340, 40))
         time_label = labelfont.render(f"time", 1, (255, 255, 255))
         screen1.blit(time_label, (570, 20))
@@ -663,6 +702,9 @@ def level2(namebox, sscore=0):
 # screen for level 3
 def level3(namebox, ssscore=0):
 
+    pygame.mixer.music.load("./images/kirby.mp3")
+    pygame.mixer.music.play(-1,0,0)
+
     # importing score from the first level
     global score
     score = ssscore
@@ -704,15 +746,19 @@ def level3(namebox, ssscore=0):
             if self.x <=0:
                 self.xspeed = random.randint(1,5)
                 self.yspeed = random.randint(-5,5)
-            if self.x + self.xspeed +50 >= 1000:
+                hits.play()
+            if self.x + self.xspeed + 50 >= 1000:
                 self.xspeed = random.randint(1,5)*-1
                 self.yspeed = random.randint(-5,5)
+                hits.play()
             if self.y <=0:
                 self.yspeed = random.randint(1,5)
                 self.xspeed = random.randint(-5,5)
+                hits.play()
             if self.y + self.yspeed +50 >= 550:
                 self.yspeed = random.randint(1,5)*-1
                 self.xspeed = random.randint(-5,5)
+                hits.play()
             else:
                 self.x += self.xspeed
                 self.y += self.yspeed
@@ -840,7 +886,7 @@ def level3(namebox, ssscore=0):
             secondstimer = 0
             time += 1
             score += 5
-        if time == 2 and life >= 1:
+        elif time == 60 and life >= 1:
             run = endgame(namebox, score)
         else:
             secondstimer += 1
