@@ -791,7 +791,7 @@ def level3(namebox, ssscore=0):
     # characters on screen
     mariogame = marioplayer(500, 335)
     movingenemy = []
-    for i in range(10):
+    for i in range(9):
         enemy1 = enemies(random.randint(100,800), random.randint(50,150), random.randint(-5,5), random.randint(-5,5))
         movingenemy += [enemy1]
 
